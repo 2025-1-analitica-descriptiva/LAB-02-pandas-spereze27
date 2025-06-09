@@ -6,17 +6,33 @@ librerias de pandas para resolver las preguntas.
 """
 
 
-def pregunta_10():
-    """
-    Construya una tabla que contenga `c1` y una lista separada por ':' de los
-    valores de la columna `c2` para el archivo `tbl0.tsv`.
+import pandas as pd
 
-    Rta/
-                                 c2
-    c1
-    A               1:1:2:3:6:7:8:9
-    B                 1:3:4:5:6:8:9
-    C                     0:5:6:7:9
-    D                   1:2:3:5:5:7
-    E   1:1:2:3:3:4:5:5:5:6:7:8:8:9
-    """
+import pandas as pd
+
+def pregunta_10():
+    # Leer el archivo tbl0.tsv
+    df = pd.read_csv("files/input/tbl0.tsv", sep="\t")
+    
+    # Ordenar por 'c1' y 'c2' para mantener el orden deseado
+    df = df.sort_values(by=['c1', 'c2'])
+    
+    # Agrupar por 'c1' y concatenar los valores de 'c2' como strings separados por ':'
+    result = df.groupby("c1")["c2"].apply(lambda x: ':'.join(map(str, x))).to_frame()
+    
+    return result
+
+print(pregunta_10())
+"""
+Construya una tabla que contenga `c1` y una lista separada por ':' de los
+valores de la columna `c2` para el archivo `tbl0.tsv`.
+
+Rta/
+                                c2
+c1
+A               1:1:2:3:6:7:8:9
+B                 1:3:4:5:6:8:9
+C                     0:5:6:7:9
+D                   1:2:3:5:5:7
+E   1:1:2:3:3:4:5:5:5:6:7:8:8:9
+"""
